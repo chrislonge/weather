@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chart from '../components/chart';
+import _ from 'lodash';
+
+// T(K) × 9/5 - 459.67 Kelvin -> Fahrenheit
 
 class WeatherList extends Component {
     renderWeather(cityData) {
         const name = cityData.city.name;
-        const temps = cityData.list.map(weather => weather.main.temp);
+        const tempsInF = _.map(cityData.list.map(weather => weather.main.temp), (tempInK) => _.round(tempInK * (9/5) - 459.67));
+        console.log("Temperature in F: ", tempsInF);
         const pressures = cityData.list.map(weather => weather.main.pressure);
         const humidities = cityData.list.map(weather => weather.main.humidity);
 
         return (
             <tr key={name}>
                 <td>{name}</td>
-                <td><Chart data={temps} color="orange" units={"K"} /></td>
+                <td><Chart data={tempsInF} color="orange" units={"℉"} /></td>
                 <td><Chart data={pressures} color="green" units={"hPa"} /></td>
                 <td><Chart data={humidities} color="black" units={"%"} /></td>
             </tr>
@@ -25,7 +29,7 @@ class WeatherList extends Component {
                 <thead>
                     <tr>
                         <th>City</th>
-                        <th>Temperature (K)</th>
+                        <th>Temperature (℉)</th>
                         <th>Pressure (hPa)</th>
                         <th>Humidity (%)</th>
                     </tr>
