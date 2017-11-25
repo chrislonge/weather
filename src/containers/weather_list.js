@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chart from '../components/chart';
 import _ from 'lodash';
+import './weather_list.css';
 
 // T(K) × 9/5 - 459.67 Kelvin -> Fahrenheit
 
